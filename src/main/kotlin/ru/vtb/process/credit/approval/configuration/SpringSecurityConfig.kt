@@ -33,10 +33,15 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authenticationProvider(authenticationProvider())
+                .anonymous().and()
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/process-api/identity/users/**/picture").permitAll()
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .httpBasic()
     }
